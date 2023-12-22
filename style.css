@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.taskManager {
+    margin: 1em;
+    border: 2px solid black;
+    padding: 1em;
+    border-radius: 10px;
+    width: 600px;
+}
+
+#error {
+    color: rgb(255, 255, 255);
+    display: none;
+    background-color: red;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: .5em;
+}
+
+form {
+    text-align: left;
+}
+
+input {
+    font-size: 18px;
+    margin: .5em .5em .5em 0em;
+    padding: .2em;
+    width: 40%;
+    border-radius: 3px;
+    border: 2px solid black;
+}
+
+button {
+    font-size: 15px;
+    padding: .3em;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(69, 134, 232);
+    color: white;
+    transition: .2s all;
+    margin-right: .3em;
+    width: 90px;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: translateY(3px);
+    box-shadow: -1px 10px 10px -5px rgba(0,0,0,0.75);
+}
+
+ul {
+    list-style: none;
+}
+
+.task {
+    transition: .2s all;
+}
+
+.task:disabled {
+    border: none;
+    background-color: transparent;
+    color: rgb(135, 135, 135)
+}
+
+.task:enabled {
+    border: none;
+    
+}
