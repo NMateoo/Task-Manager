@@ -13,7 +13,7 @@ addBtn.addEventListener('click', e => {
         taskName.value = '';
         setInterval(() => {
             err.style.display = 'none';
-        }, 2000);
+        }, 3000);
     } else {
         const name = taskName.value;
         const newLi = document.createElement('li');
@@ -64,7 +64,7 @@ clearBtn.addEventListener('click', e => {
         err.innerText = 'There are no tasks to clear';
         setInterval(() => {
             err.style.display = 'none';
-        }, 2000);
+        }, 3000);
     } else {
         if (confirm('Are you sure you want to clear all tasks?')) {
             taskList.innerHTML = '';
