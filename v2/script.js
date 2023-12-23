@@ -1,7 +1,9 @@
 const taskName = document.querySelector('#taskName');
 const btnAdd = document.querySelector('#addTask');
+const btnClear = document.querySelector('#clear');
 const taskList = document.querySelector('#taskList');
 const err = document.querySelector('#err');
+let timeOut;
 
 function loadTasksFromLocalStorage() {
     const tasks = loadFromLocalStorage('tasks');
@@ -19,12 +21,15 @@ function addToLocalStorage(key, newValue) {
 }
 
 function displayErrorMessage(message) {
-    err.textContent = message;
+    const icon = '<i class="fa-solid fa-triangle-exclamation"></i>';
+    err.innerHTML = icon + message;
     err.style.display = 'block';
     taskName.value = '';
     taskName.focus();
 
-    setTimeout(() => {
+    clearTimeout(timeOut);
+
+    timeOut = setTimeout(() => {
         err.style.display = 'none';
     }, 3000);
 }
@@ -45,14 +50,15 @@ function addTask() {
 function createTask(taskName) {
     const newLi = document.createElement('li');
     const task = document.createElement('input');
-    const btnEdit = createButton('Edit');
-    const btnDelete = createButton('Delete');
+    const btnEdit = createButton('Edit', '<i class="fa-solid fa-pen-to-square"></i>');
+    const btnDelete = createButton('Delete', '<i class="fa-solid fa-trash"></i>');
     btnEdit.className = 'btn-edit';
     btnDelete.className = 'btn-delete';
 
     task.value = taskName;
     task.disabled = true;
     task.spellcheck = false;
+    task.type = 'text';
     taskList.appendChild(newLi);
     newLi.append(task, btnEdit, btnDelete);
 
@@ -67,9 +73,9 @@ function createTask(taskName) {
     });
 }
 
-function createButton(textContent) {
+function createButton(textContent, icon) {
     const button = document.createElement('button');
-    button.textContent = textContent;
+    button.innerHTML = textContent + icon;
     return button;
 }
 
@@ -77,20 +83,40 @@ function toggleTaskEditing(task, btnEdit, taskName) {
     task.disabled = !task.disabled;
 
     if (!task.disabled) {
-        btnEdit.textContent = 'Save';
+        btnEdit.innerHTML = 'Save' + '<i class="fa-solid fa-floppy-disk"></i>';
         task.focus();
     } else {
-        btnEdit.textContent = 'Edit';
+        btnEdit.innerHTML = 'Edit' + '<i class="fa-solid fa-pen-to-square"></i>';
         updateTaskInLocalStorage(taskName, task.value);
     }
 }
 
 function removeTask(taskName, taskElement) {
-    const tasks = loadFromLocalStorage('tasks');
+    let tasks = loadFromLocalStorage('tasks');
     const index = tasks.indexOf(taskName);
-    tasks.splice(index, 1);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    taskElement.remove();
+
+    if (index !== -1) {
+        tasks.splice(index, 1);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        taskElement.remove();
+    }
+    
+    if (tasks.length === 0) {
+        localStorage.removeItem('tasks');
+    }
+}
+
+
+function clearTasks() {
+    const storedTasks = localStorage.getItem('tasks');
+    if (!storedTasks) {
+        displayErrorMessage('No tasks to clear');
+    } else {
+        if (confirm('Are you sure you want to clear all tasks?')) {
+            localStorage.removeItem('tasks');
+            taskList.innerHTML = '';
+        }
+    }
 }
 
 function updateTaskInLocalStorage(oldTaskName, newTaskValue) {
@@ -103,6 +129,11 @@ function updateTaskInLocalStorage(oldTaskName, newTaskValue) {
 btnAdd.addEventListener('click', e => {
     e.preventDefault();
     addTask();
+});
+
+btnClear.addEventListener('click', e => {
+    e.preventDefault();
+    clearTasks();
 });
 
 document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);

@@ -32,8 +32,14 @@ form {
 
 #err {
     color: #e74c3c;
-    margin-bottom: 10px;
+    margin: 10px 10px 10px 10px;
     display: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+i {
+    margin: 5px;
 }
 
 input[type="text"] {
@@ -41,11 +47,11 @@ input[type="text"] {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: calc(100% - 10px);
+    width: calc(100% - 50px);
     font-size: 18px;
 }
 
-button {
+#addTask, #clear {
     padding: 8px;
     width: 150px;
     background-color: #3498db;
@@ -53,8 +59,12 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+    transition: .2s all;
     font-size: 18px;
+}
+
+#addTask {
+    margin-bottom: 12px;
 }
 
 button:hover {
@@ -70,31 +80,34 @@ ul {
 }
 
 li {
-    margin-bottom: 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: #ecf0f1;
     padding: 14px;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
 }
 
 li input[type="text"] {
-    flex-grow: 1;
     margin-right: 10px;
+    font-size: 14px;
+    padding: 10px;
 }
 
 button.btn-edit,
 button.btn-delete {
     padding: 10px;
-    width: 80px;
+    width: 150px;
     margin-left: 5px;
     background-color: #2ecc71;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: .2s all;
+    font-size: 16px;
 }
 
 button.btn-delete {
