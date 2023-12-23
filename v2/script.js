@@ -93,7 +93,7 @@ function toggleTaskEditing(task, btnEdit, taskName) {
 
 function removeTask(taskName, taskElement) {
     let tasks = loadFromLocalStorage('tasks');
-    const index = tasks.indexOf(taskName);
+    const index = tasks.indexOf(taskName);  
 
     if (index !== -1) {
         tasks.splice(index, 1);
