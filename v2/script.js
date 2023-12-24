@@ -6,8 +6,7 @@ const err = document.querySelector('#err');
 let timeOut;
 
 function loadTasksFromLocalStorage() {
-    const tasks = loadFromLocalStorage('tasks');
-    tasks.forEach(createTask);
+    loadFromLocalStorage('tasks').forEach(createTask);
 }
 
 function loadFromLocalStorage(key) {
@@ -49,16 +48,10 @@ function addTask() {
 
 function createTask(taskName) {
     const newLi = document.createElement('li');
-    const task = document.createElement('input');
-    const btnEdit = createButton('Edit', '<i class="fa-solid fa-pen-to-square"></i>');
-    const btnDelete = createButton('Delete', '<i class="fa-solid fa-trash"></i>');
-    btnEdit.className = 'btn-edit';
-    btnDelete.className = 'btn-delete';
+    const task = createInput('text', taskName, true, false);
+    const btnEdit = createButton('Edit', '<i class="fa-solid fa-pen-to-square"></i>', 'btn-edit');
+    const btnDelete = createButton('Delete', '<i class="fa-solid fa-trash"></i>', 'btn-delete');
 
-    task.value = taskName;
-    task.disabled = true;
-    task.spellcheck = false;
-    task.type = 'text';
     taskList.appendChild(newLi);
     newLi.append(task, btnEdit, btnDelete);
 
@@ -73,9 +66,19 @@ function createTask(taskName) {
     });
 }
 
-function createButton(textContent, icon) {
+function createInput(type, value, disabled, spellcheck) {
+    const input = document.createElement('input');
+    input.type = type;
+    input.value = value;
+    input.disabled = disabled;
+    input.spellcheck = spellcheck;
+    return input;
+}
+
+function createButton(textContent, icon, className) {
     const button = document.createElement('button');
     button.innerHTML = textContent + icon;
+    button.className = className;
     return button;
 }
 
@@ -92,8 +95,8 @@ function toggleTaskEditing(task, btnEdit, taskName) {
 }
 
 function removeTask(taskName, taskElement) {
-    let tasks = loadFromLocalStorage('tasks');
-    const index = tasks.indexOf(taskName);  
+    const tasks = loadFromLocalStorage('tasks');
+    const index = tasks.indexOf(taskName);
 
     if (index !== -1) {
         tasks.splice(index, 1);
@@ -105,7 +108,6 @@ function removeTask(taskName, taskElement) {
         localStorage.removeItem('tasks');
     }
 }
-
 
 function clearTasks() {
     const storedTasks = localStorage.getItem('tasks');
@@ -124,6 +126,7 @@ function updateTaskInLocalStorage(oldTaskName, newTaskValue) {
     const index = tasks.indexOf(oldTaskName);
     tasks[index] = newTaskValue;
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    console.log(tasks.indexOf(newTaskValue));
 }
 
 btnAdd.addEventListener('click', e => {
